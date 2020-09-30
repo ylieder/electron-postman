@@ -1,6 +1,6 @@
 # Electon Postman :mailbox_with_mail:
 
-Electron Postman is an easy-to-use wrapper around Electron's build-in IPC library.
+Electron Postman is an easy-to-use wrapper around Electron's built-in IPC library.
 
 Features:
 
@@ -8,6 +8,7 @@ Features:
 - Easy and direct window-to-window communication
 - Integrates smoothly in `nodeIntegration` disabled and `contextIsolation` enabled
   BrowserWindows
+- Allows `invoke` calls not only from renderer to main process, but also the other way around
 
 ## Example
 
@@ -45,7 +46,7 @@ window.ipc.invokeTo('window-b').then((result) => console.log(result));
 Yarn:
 
 ```sh
-yarn add electorn-postman
+yarn add electron-postman
 ```
 
 npm:
@@ -67,7 +68,7 @@ npm install electron-postman
   mainWindow.loadFile(path);
   ```
   
-1. (Optional) If using a preload script, expose the API to the renderer process.
+2. (Optional) If using a preload script, expose the API to the renderer process.
 
   ```js
   // preload.js
@@ -75,7 +76,7 @@ npm install electron-postman
   ipcRenderer.exposeToMainWorld('ipc');
   ```
 
-1. Send, invoke, handle and receive messages in main and in renderer processes.
+3. Send, invoke, handle and receive messages in main and in renderer processes.
 
 ## API
 
