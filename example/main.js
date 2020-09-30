@@ -53,24 +53,6 @@ app.whenReady().then(() => {
   const windowB = createWindow('Window B');
   ipcMain.registerBrowserWindow('window-b', windowB);
   windowB.loadFile('index.html');
-
-  // Promise.all([promiseA, promiseB, promiseC]).then(() => {
-  //   // All three browser windows are registered for IPC communication at this point
-
-  //   ipcMain.send('window-a', 'test-send-from-main', 'Send a message from main');
-  //   ipcMain.invoke('window-b', 'test-invoke-from-main', 'Square this number', 5)
-  //     .then((result) => {
-  //       console.log(`test-main-invoke: result=${result}`);
-  //     });
-  //   ipcMain.handle('window-c', 'test-renderer-invoke', (msg, n) => {
-  //     console.log(`test-renderer-invoke: msg=${msg}, n=${n}`);
-  //     return n + 5;
-  //   });
-  //   ipcMain.on('window-c', 'test-renderer-invoke', (msg, n) => {
-  //     console.log(`test-renderer-invoke: msg=${msg}, n=${n}`);
-  //     return n + 5;
-  //   });
-  // });
 });
 
 app.on('window-all-closed', () => {

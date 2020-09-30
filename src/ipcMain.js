@@ -81,7 +81,7 @@ function once(windowName, channel, callback) {
   }
 }
 
-function invoke(windowName, channel, ...args) {
+function invokeTo(windowName, channel, ...args) {
   const token = getToken();
   return new Promise((resolve) => {
     ipcMain.once(prefixed(windowName, channel, token), (event, result) => {
@@ -116,7 +116,7 @@ module.exports = {
   sendTo,
   on,
   once,
-  invoke,
+  invokeTo,
   handle,
   handleOnce,
   removeAllListeners,
