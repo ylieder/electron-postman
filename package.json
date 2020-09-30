@@ -8,6 +8,10 @@
   "name": "electron-postman",
   "version": "0.1.0",
   "description": "Easy Electron IPC with focus on window-to-window communication and disabled node integration in renderers",
+  "keywords": [
+    "electron", "electron-ipc", "ipc", "javascript", "electron-postman", "window-to-window",
+    "window-communication", "node-integration", "electron-module", "nodejs"
+    ],
   "main": "index.js",
   "repository": "git@github.com:ylieder/electron-postman.git",
   "author": "Yannic Lieder",
