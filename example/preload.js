@@ -1,4 +1,4 @@
 // eslint-disable-next-line import/no-unresolved
-const { ipcRenderer } = require('..');
+const { ipcRenderer } = require('electron-postman');
 
-ipcRenderer.exposeInMainWorld('ipcB');
+ipcRenderer.exposeInMainWorld('ipc');

@@ -1,11 +1,7 @@
 /* eslint-disable no-console */
 const { app, BrowserWindow } = require('electron');
+const { ipcMain } = require('electron-postman');
 const path = require('path');
-
-// This is replaced by
-// const { ipcMain } = require('electron-postman')
-// in a real application.
-const { ipcMain } = require('..'); // eslint-disable-line import/no-unresolved
 
 function createWindow(title) {
   const window = new BrowserWindow({
@@ -18,8 +14,8 @@ function createWindow(title) {
       preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: false,
       contextIsolation: true,
-      // Sandbox doesn't works in this example (cannot find module '..')
-      // Should work, if electron-postman is installed via npm/yarn
+      // Sandbox doesn't works in this example (module not found: electron-postman)
+      // Should work, if a bundler like webpack is used.
       // sandbox: true,
     },
   });
