@@ -8,7 +8,8 @@ Features:
 - Easy and direct window-to-window communication
 - Integrates smoothly in `nodeIntegration` disabled and `contextIsolation` enabled
   BrowserWindows
-- Allows `invoke` calls not only from renderer to main process, but also the other way around
+- Allows `invoke` calls not only from renderer to main process, but also the other
+  way around
 
 ## Example
 
@@ -83,27 +84,34 @@ npm install electron-postman
 ### `ipcMain`
 
 #### `ipcMain.registerBrowserWindow(windowName, browserWindow)`
+
 - `windowName` String
 - `browserWindow` BrowserWindow
   
 Registers the window and is made known with all other existing windows.
   
 #### `ipcMain.sendTo(windowName, channel, ...args)`
+
 - `windowName` String
 - `channel` String
 - `...args` any[]
   
-Send an asynchronous message to the renderer process via `channel`, along with arguments. Requires that `windowName` is a registered window. The renderer process can handle the message by listening to `channel`.
+Send an asynchronous message to the renderer process via `channel`, along with
+arguments. Requires that `windowName` is a registered window. The renderer
+process can handle the message by listening to `channel`.
   
 #### `ipcMain.on(windowName, channel, listener)`
+
 - `windowName` String
 - `channel` String
 - `listener` Function
   - `...args` any[]
   
-Listen to messages on `channel` from window `windowName`. Requires that `windowName` is a registered window.
+Listen to messages on `channel` from window `windowName`. Requires that
+`windowName` is a registered window.
 
 #### `ipcMain.once(windowName, channel, listener)`
+
 - `windowName` String
 - `channel` String
 - `listener` Function
@@ -112,25 +120,34 @@ Listen to messages on `channel` from window `windowName`. Requires that `windowN
 Same as `ipcMain.on`, but listener is removed once a message on `channel` was received.
 
 #### `ipcMain.invokeTo(windowName, channel, ...args)`
+
 - `windowName` String
 - `channel` String
 - `...args` any[]
 
 Returns `Promise<any>` - Resolves with the response from the other process.
 
-Send a message to `windowName` via `channel` and expect a result asynchronously. The other process should listen for channel with `ipcMain.handle()` or `ipcRenderer.handle()` respectively.
+Send a message to `windowName` via `channel` and expect a result asynchronously.
+The other process should listen for channel with `ipcMain.handle()` or
+`ipcRenderer.handle()` respectively.
 
 #### `ipcMain.handle(windowName, channel, listener)`
+
 - `windowName` String
 - `channel` String
 - `listener` Function
   - `...args` any[]
   
-Adds a handler for an invokeable IPC. This handler will be called whenever a renderer calls `ipcRenderer.invoke(channel, ...args)` or `ipcRenderer.invokeTo('main', channel, ...args`.
+Adds a handler for an invokeable IPC. This handler will be called whenever a
+renderer calls `ipcRenderer.invoke(channel, ...args)` or
+`ipcRenderer.invokeTo('main', channel, ...args`.
 
-If listener returns a Promise, the eventual result of the promise will be returned as a reply to the remote caller. Otherwise, the return value of the listener will be used as the value of the reply.
+If listener returns a Promise, the eventual result of the promise will be
+returned as a reply to the remote caller. Otherwise, the return value of the
+listener will be used as the value of the reply.
 
 #### `ipcMain.handleOnce(windowName, channel, listener)`
+
 - `windowName` String
 - `channel` String
 - `listener` Function
@@ -139,12 +156,14 @@ If listener returns a Promise, the eventual result of the promise will be return
 Same as `ipcMain.handle`, but handler is removed once an invoke call was handled.
 
 #### `ipcMain.removeAllListeners(windowName, channel)`
+
 - `windowName` String
 - `channel` String
 
 Removes all listeners registered on `windowName` and `channel`.
   
 #### `ipcMain.removeHandler(windowName, channel)`
+
 - `windowName` String
 - `channel` String
 
@@ -152,29 +171,38 @@ Removes handler, registered on `windowame` and `channel`.
 
 ### `ipcRenderer`
 
+Each process is addressed with its process name (`processName`). For a renderer
+process, its process name is the registered window name (renderer-to-renderer
+communication), the main process has the process name `'main'` (renderer-to-main
+communication).
+
 #### `ipcRenderer.exposeToMainWorld(apiKey)`
+
 - `apiKey` String
 
-Exposes the IPC renderer API to context isolated renderer process. Works only, if `contextIsolation` is enabled for that window. Uses Electron's `contextBridge` API.
-
-#### `ipcRenderer.`
-
-Each process is addressed with its process name (`processName`). For a renderer process, its process name is the registered window name (renderer-to-renderer communication), the main process has the process name `'main'` (renderer-to-main communication).
+Exposes the IPC renderer API to context isolated renderer process. Works only,
+if `contextIsolation` is enabled for that window. Uses Electron's
+`contextBridge` API.
 
 #### `ipcRenderer.send(channel, ...args)`
+
 - `channel` String
 - `...args` any[]
   
 Equivalent to `ipcRenderer.sendTo('main', channel, ...args)`.
 
 #### `ipcRenderer.sendTo(processName, channel, ...args)`
+
 - `processName` String
 - `channel` String
 - `...args` any[]
   
-Send an asynchronous message to the process registered as `processName` via `channel`, along with arguments. The receiving process can handle the message by listening to `channel`.
- 
+Send an asynchronous message to the process registered as `processName` via
+`channel`, along with arguments. The receiving process can handle the message by
+listening to `channel`.
+
 #### `ipcRenderer.on(processName, channel, listener)`
+
 - `processName` String
 - `channel` String
 - `listener` Function
@@ -183,6 +211,7 @@ Send an asynchronous message to the process registered as `processName` via `cha
 Listen to messages on `channel` from process `processName`.
 
 #### `ipcRenderer.once(processName, channel, listener)`
+
 - `processName` String
 - `channel` String
 - `listener` Function
@@ -191,6 +220,7 @@ Listen to messages on `channel` from process `processName`.
 Same as `ipcMain.on`, but listener is removed once a message on `channel` was received.
 
 #### `ipcRenderer.invoke(channel, ...args)`
+
 - `processName` String
 - `channel` String
 - `...args` any[]
@@ -198,25 +228,33 @@ Same as `ipcMain.on`, but listener is removed once a message on `channel` was re
 Equivalent to `ipcRenderer.invokeTo('main', channel, ...args)`.
 
 #### `ipcRenderer.invokeTo(processName, channel, ...args)`
+
 - `processName` String
 - `channel` String
 - `...args` any[]
 
 Returns `Promise<any>` - Resolves with the response from the other process.
 
-Send a message to `windowName` via `channel` and expect a result asynchronously. The other process should listen for channel with `ipcMain.handle()` or `ipcRenderer.handle()` respectively.
+Send a message to `windowName` via `channel` and expect a result asynchronously.
+The other process should listen for channel with `ipcMain.handle()` or
+`ipcRenderer.handle()` respectively.
 
 #### `ipcRenderer.handle(processName, channel, listener)`
+
 - `processName` String
 - `channel` String
 - `listener` Function
   - `...args` any[]
   
-Adds a handler for an invokeable IPC. This handler will be called whenever a process calls `.invoke('this-window-name', channel, ...args)`.
+Adds a handler for an invokeable IPC. This handler will be called whenever a process
+calls `.invoke('this-window-name', channel, ...args)`.
 
-If listener returns a Promise, the eventual result of the promise will be returned as a reply to the remote caller. Otherwise, the return value of the listener will be used as the value of the reply.
+If listener returns a Promise, the eventual result of the promise will be returned
+as a reply to the remote caller. Otherwise, the return value of the listener will
+be used as the value of the reply.
 
 #### `ipcRenderer.handleOnce(processName, channel, listener)`
+
 - `processName` String
 - `channel` String
 - `listener` Function
@@ -225,12 +263,14 @@ If listener returns a Promise, the eventual result of the promise will be return
 Same as `ipcRenderer.handle`, but handler is removed once an invoke call was handled.
 
 #### `ipcRenderer.removeAllListeners(processName, channel)`
+
 - `processName` String
 - `channel` String
 
 Removes all listeners registered on `processName` and `channel`.
   
 #### `ipcRenderer.removeHandler(processName, channel)`
+
 - `processName` String
 - `channel` String
 
