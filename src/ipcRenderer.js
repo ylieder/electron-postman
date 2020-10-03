@@ -12,10 +12,8 @@ let windowName;
   ipcRenderer.on(INTERNAL_CHANNELS.announceWindowId, (event, name, id) => {
     if (id === undefined) {
       processes.delete(name);
-      console.log(`Delete window '${name}'`);
     } else {
       processes.set(name, id);
-      console.log(`Add window ${name}, ${id}`);
     }
   });
 }());
@@ -24,7 +22,6 @@ let windowName;
   ipcRenderer.once(INTERNAL_CHANNELS.initRendererIpc, (event, name, windows) => {
     windowName = name;
     processes = new Map([...processes, ...windows]);
-    console.log(`Initialized window '${windowName}'`);
   });
 }());
 
@@ -83,7 +80,7 @@ function handle(processName, channel, callback) {
     ipcRenderer.on(prefixed(processName, channel), (event, token, ...args) => {
       const result = callback(...args);
       const prefixedChannel = prefixed(windowName, channel, token);
-      if (event.senderId === MAIN_PROCESS_ID) {
+      if (event.senderId === 0) {
         ipcRenderer.send(prefixedChannel, result);
       } else {
         ipcRenderer.sendTo(event.senderId, prefixedChannel, result);
@@ -97,7 +94,7 @@ function handleOnce(processName, channel, callback) {
     ipcRenderer.once(prefixed(processName, channel), (event, token, ...args) => {
       const result = callback(...args);
       const prefixedChannel = prefixed(windowName, channel, token);
-      if (event.senderId === MAIN_PROCESS_ID) {
+      if (event.senderId === 0) {
         ipcRenderer.send(prefixedChannel, result);
       } else {
         ipcRenderer.sendTo(event.senderId, prefixedChannel, result);

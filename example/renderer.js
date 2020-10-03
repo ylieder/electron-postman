@@ -1,5 +1,7 @@
 /* eslint-disable no-console */
 
+window.ipc.handle('main', 'invoke-to-a', (msg, n) => n ** 2);
+
 window.ipc.on('window-a', 'msg', (...args) => {
   console.log(`Receive message from window A: ${args}`);
 });

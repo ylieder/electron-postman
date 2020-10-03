@@ -14,9 +14,6 @@ function createWindow(title) {
       preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: false,
       contextIsolation: true,
-      // Sandbox doesn't works in this example (module not found: electron-postman)
-      // Should work, if a bundler like webpack is used.
-      // sandbox: true,
     },
   });
   window.webContents.openDevTools();
@@ -49,6 +46,13 @@ app.whenReady().then(() => {
   const windowB = createWindow('Window B');
   ipcMain.registerBrowserWindow('window-b', windowB);
   windowB.loadFile('index.html');
+
+  windowA.webContents.on('did-finish-load', () => {
+    console.log('invoke');
+    ipcMain.invokeTo('window-a', 'invoke-to-a', 'Square this value', 5).then((result) => {
+      console.log(`The result is ${result}`);
+    });
+  });
 });
 
 app.on('window-all-closed', () => {
