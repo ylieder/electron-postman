@@ -34,7 +34,7 @@ windows, you can expose Electron Postman easily via a preload script.
 
 ```js
 // preload.js
-ipcRenderer.exposeToMainWorld('ipc');
+ipcRenderer.exposeInMainWorld('ipc');
 ```
 
 ```js
@@ -74,7 +74,7 @@ npm install electron-postman
   ```js
   // preload.js
   const { ipcRenderer } = require('electron-postman');
-  ipcRenderer.exposeToMainWorld('ipc');
+  ipcRenderer.exposeInMainWorld('ipc');
   ```
 
 3. Send, invoke, handle and receive messages in main and in renderer processes.
@@ -176,7 +176,7 @@ process, its process name is the registered window name (renderer-to-renderer
 communication), the main process has the process name `'main'` (renderer-to-main
 communication).
 
-#### `ipcRenderer.exposeToMainWorld(apiKey)`
+#### `ipcRenderer.exposeInMainWorld(apiKey)`
 
 - `apiKey` String
 
